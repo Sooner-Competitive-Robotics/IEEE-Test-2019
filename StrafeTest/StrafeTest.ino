@@ -18,9 +18,45 @@ void loop()
 {
   // Straight Left Strafe
   drivetrain.setRPM(25);
+  drivetrain.strafe(0, -1, drivetrain.convertInchesToSteps(12));
+  delay(500);
+  
+   // Straight Right Strafe
+  drivetrain.setRPM(25);
   drivetrain.strafe(0, 1, drivetrain.convertInchesToSteps(12));
+  delay(500);
+  
+   // Straight Forwards Strafe
+  drivetrain.setRPM(25);
+  drivetrain.strafe(1, 0, drivetrain.convertInchesToSteps(12));
+  delay(500);
+   
+   // Straight Backwards Strafe
+  drivetrain.setRPM(25);
+  drivetrain.strafe(-1, 0, drivetrain.convertInchesToSteps(12));
+  delay(500);
+  
+   // Straight Forwards Left Strafe
+  drivetrain.setRPM(25);
+  drivetrain.strafe(1, -1, drivetrain.convertInchesToSteps(12));
+  delay(500);
+  
+   // Straight Forwards Right Strafe
+  drivetrain.setRPM(25);
+  drivetrain.strafe(1, 1, drivetrain.convertInchesToSteps(12));
+  delay(500);
+  
+   // Straight Backwards Left Strafe
+  drivetrain.setRPM(25);
+  drivetrain.strafe(-1, -1, drivetrain.convertInchesToSteps(12));
+  delay(500);
+  
+   // Straight Backwards Right Strafe
+  drivetrain.setRPM(25);
+  drivetrain.strafe(-1, 1, drivetrain.convertInchesToSteps(12));
   delay(500);
 
   while(true){};
+
 }
 
