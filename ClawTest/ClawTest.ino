@@ -1,3 +1,4 @@
+#include <Servo.h>
 #define pinNum 1
 
 Servo clawServo;
