@@ -8,20 +8,19 @@ StepperMotorDrivetrain drivetrain;
 void setup()
 {
   //Initialize motors and basic drivetrain functions
-  //TODO: Specify pins, right now they're based on last year
-  //drivetrain.initLeft(16, 15, 25, 24);
-  //drivetrain.initRight(10, 11, 8, 7);
+  drivetrain.initFrontLeft(2, 3, 4, 5);
+  drivetrain.initFrontRight(40, 41, 42, 43);
+  drivetrain.initBackLeft(8, 9, 10, 11);
+  drivetrain.initBackRight(53, 52, 51, 50);
   drivetrain.setRPM(25);
 }
 
 void loop()
 {
-  drivetrain.setRPM(25);
-  drivetrain.step(drivetrain.convertInchesToSteps(12), drivetrain.convertInchesToSteps(12));
+  drivetrain.step(drivetrain.convertInchesToSteps(120), drivetrain.convertInchesToSteps(120));
   delay(500);
 
-  drivetrain.setRPM(25);
-  drivetrain.step(drivetrain.convertInchesToSteps(-12), drivetrain.convertInchesToSteps(-12));
+  drivetrain.step(drivetrain.convertInchesToSteps(-120), drivetrain.convertInchesToSteps(-120));
   delay(500);
 
   while(true){};
