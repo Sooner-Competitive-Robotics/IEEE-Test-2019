@@ -6,7 +6,7 @@ byte slaveAddress = 8;
 //Website for help on sending data:
 //https://thewanderingengineer.com/2015/05/06/sending-16-bit-and-32-bit-numbers-with-arduino-i2c/
 uint8_t rpm = 25;
-int8_t distance = 12;
+//uint8_t distance = 12;
 
 void setup() {
   // put your setup code here, to run once:
@@ -14,14 +14,15 @@ void setup() {
 }
 
 void loop() {
+  
   // put your main code here, to run repeatedly:
   Wire.beginTransmission(slaveAddress);
   //send RPM
   Wire.write(rpm);
-  delay(100);
+  //delay(100);
   //send distance
-  Wire.write(distance);
+  //Wire.write(distance);
   Wire.endTransmission();
-
-  while(true){};
+  delay(100);
+  //while(true){};
 }
