@@ -4,9 +4,6 @@
 
 bool turnDone = false;
 
-StepperMotorDrivetrain drivetrain;
-
-
 void setup()
 {
   Serial.begin(9600);

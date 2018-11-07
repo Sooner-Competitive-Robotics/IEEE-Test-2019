@@ -3,9 +3,6 @@
 #include "IEEErobot2019.h"
 bool turnDone = false;
 
-StepperMotorDrivetrain drivetrain;
-
-
 void setup()
 {
   Serial.begin(9600);
