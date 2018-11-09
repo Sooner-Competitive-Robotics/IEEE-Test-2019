@@ -1,16 +1,20 @@
-#include "StepperMotorDrivetrain.h"
+
 #include <Wire.h>
 //Arbitrary
 int slaveAddress = 8;
-
-StepperMotorDrivetrain drivetrain;
+//int ledState;
 
 void setup() {
   // put your setup code here, to run once:
+  
+  pinMode(7,OUTPUT);
+
+  digitalWrite(7,LOW);
+  
   Wire.begin(8);
-  Wire.onReceive(receiveRPM);
-  delay(100);
-  Wire.onReceive(receiveDistance);
+  Wire.onReceive(LEDState);
+  //delay(100);
+  //Wire.onReceive(receiveFreq);
 }
 
 void loop() {
@@ -19,12 +23,11 @@ void loop() {
   while(true);
 }
 
-void receiveRPM(int data){
+void LEDState(int ledState){
   //TODO: figure out how to read in 2 bytes and convert into integer
-  drivetrain.setRPM(data);
-}
-
-void receiveDistance(int data){
-  //TODO: figure out how to read in 2 bytes and convert into integer
-  drivetrain.step(drivetrain.convertInchesToSteps(data), drivetrain.convertInchesToSteps(data));
+  if(ledState == 1){
+    digitalWrite(7,HIGH);
+    delay(5000);
+    digitalWrite(7,LOW);
+  }  
 }
