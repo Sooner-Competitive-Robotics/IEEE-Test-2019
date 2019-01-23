@@ -6,19 +6,19 @@ bool turnDone = false;
 
 void setup()
 {
-	Wire.begin(001);
-	Wire.onRecieve(testEvent);
+	//Wire.begin(001);
+	//Wire.onRecieve(testEvent);
 	
-	robotSetup();
-	
-	//Serial.begin(9600);
 	//robotSetup();
+	
+	Serial.begin(9600);
+	robotSetup();
 }
 
 void loop()
 {
 
-	/*
+	
 	// Straight Left Strafe
 	drivetrain.setRPM(25);
 	drivetrain.strafe(0, -1, drivetrain.convertInchesToSteps(36));
@@ -60,9 +60,9 @@ void loop()
 	delay(500);
 
 	while(true){};
-	*/
+	
 }
-
+/*
 void testEvent()
 {
 	int counter = 0;
@@ -86,3 +86,4 @@ void testEvent()
 	
 	drivetrain.strafe(byteB, byteC, drivetrain.convertInchesToSteps(byteA));
 }
+*/

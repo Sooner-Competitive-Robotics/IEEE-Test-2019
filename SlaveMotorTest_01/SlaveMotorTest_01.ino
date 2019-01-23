@@ -4,10 +4,11 @@
 
 void setup()
 {
+	robotSetup();
+
 	Wire.begin(001);
 	Wire.onRecieve(testEvent);
 	
-	robotSetup();
 }
 
 void loop()
