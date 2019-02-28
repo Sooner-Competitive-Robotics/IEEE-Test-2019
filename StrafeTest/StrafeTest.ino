@@ -17,13 +17,13 @@ void setup()
 
 void loop()
 {
-
+  gyroInterrupt();
 	
 	// Straight Left Strafe
-	drivetrain.setRPM(25);
-	drivetrain.strafe(0, -1, drivetrain.convertInchesToSteps(36));
-	delay(500);
-
+	//drivetrain.setRPM(25);
+	//drivetrain.strafe(1,0, drivetrain.convertInchesToSteps(36));
+	//delay(500);
+/*
 	// Straight Right Strafe
 	drivetrain.setRPM(25);
 	drivetrain.strafe(0, 1, drivetrain.convertInchesToSteps(36));
@@ -60,7 +60,7 @@ void loop()
 	delay(500);
 
 	while(true){};
-	
+	*/
 }
 /*
 void testEvent()

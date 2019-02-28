@@ -22,20 +22,24 @@ void testEvent()
 	
 	int byteA = 0;
 	int byteB = 0;
+  int byteC = 0;
 	
-    while(Wire.available()) {
+  while(Wire.available()) {
 		int number = Wire.read();
 
-        if (counter == 0){
-			byteA = number;
-        }
-
-        if (counter == 1){
-			byteB = number;
-        }
-
-        counter++;
+    if (counter == 0){
+	    byteA = number;
     }
+
+    if (counter == 1){
+	    byteB = number;
+    }
+
+    if (counter == 2){
+      byteC = number;
+    }
+    counter++;
+  }
 	
-	drivetrain.step(byteA, byteA);
+	drivetrain.strafe(byteA, byteB, byteC);
 }
