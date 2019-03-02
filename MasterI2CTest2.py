@@ -2,8 +2,8 @@ import smbus
 import time
 
 bus = smbus.SMBus(1)
-address1 = 001
-# address2 = 002
+address1 = 10
+# address2 = 2
 
 
 while True:	
@@ -13,12 +13,13 @@ while True:
 	
 	# while !turn
 	
-	dist1 = 0;
-	dist2 = 1;
+	forward = 0
+	turn = 1
 	
-	bus.write_i2c_block_data(address1, 0, 12, dist1, dist2)
+	bus.write_i2c_block_data(address1, 0, [forward, turn, dist])
 	
-	time.sleep(500);
+	#TODO: Wait for response that operation is finished
+	time.sleep(50000)
 
 # turn method
 # def turn (target, current, 
