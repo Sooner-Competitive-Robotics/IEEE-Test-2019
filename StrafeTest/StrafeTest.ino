@@ -1,4 +1,4 @@
-//#include <RobotLib.h>
+#include "RobotLib.h"
 #include "StepperMotorDrivetrain.h"
 #include "IEEErobot2019.h"
 
@@ -11,13 +11,13 @@ void setup()
 	
 	//robotSetup();
 	
-	Serial.begin(9600);
-	robotSetup();
+	//Serial.begin(9600);
+	//robotSetup();
 }
 
 void loop()
 {
-  gyroInterrupt();
+  //gyroInterrupt();
 	
 	// Straight Left Strafe
 	//drivetrain.setRPM(25);

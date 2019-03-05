@@ -6,8 +6,10 @@ void setup()
 {
 	robotSetup();
 
-	Wire.begin(001);
-	Wire.onRecieve(testEvent);
+ Serial.begin(9600);
+
+	Wire.begin(10);
+	Wire.onReceive(testEvent);
 	
 }
 
@@ -27,19 +29,30 @@ void testEvent()
   while(Wire.available()) {
 		int number = Wire.read();
 
-    if (counter == 0){
+   Serial.print("Values: ");
+
+    if (counter == 1){
 	    byteA = number;
     }
 
-    if (counter == 1){
+    if (counter == 2){
 	    byteB = number;
     }
 
-    if (counter == 2){
+    if (counter == 3){
       byteC = number;
     }
+  Serial.print(number);
+  Serial.print(", ");
+    
     counter++;
   }
-	
-	drivetrain.strafe(byteA, byteB, byteC);
+
+  Serial.println();
+
+  //Serial.print(drivetrain.convertInchesToSteps(byteC));
+  
+	drivetrain.strafe(byteA, byteB, drivetrain.convertInchesToSteps(byteC) * 10);
+
+ delay(100);
 }
