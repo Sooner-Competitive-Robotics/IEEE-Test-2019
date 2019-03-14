@@ -22,14 +22,16 @@ void testEvent()
 {
 	int counter = 0;
 	
-	int byteA = 0;
-	int byteB = 0;
-  int byteC = 0;
-	
-  while(Wire.available()) {
+	int byteA = 0; //strafe forward
+	int byteB = 0; //strafe sideways
+  int byteC = 0; // distance
+	int byteD = 0; // angle
+  
+  while(Wire.available()) 
+  {
 		int number = Wire.read();
 
-   Serial.print("Values: ");
+    Serial.print("Values: ");
 
     if (counter == 1){
 	    byteA = number;
@@ -42,8 +44,13 @@ void testEvent()
     if (counter == 3){
       byteC = number;
     }
-  Serial.print(number);
-  Serial.print(", ");
+
+    if (counter == 4){
+      byteD = number;
+    }
+    
+    Serial.print(number);
+    Serial.print(", ");
     
     counter++;
   }
@@ -52,7 +59,14 @@ void testEvent()
 
   //Serial.print(drivetrain.convertInchesToSteps(byteC));
   
-	drivetrain.strafe(byteA, byteB, drivetrain.convertInchesToSteps(byteC) * 10);
+  if (byteA != 0 && byteB == 0)
+  {
+    mpu.calibrateGyro();
+    
+    smartDrive(byteC, 0); //0 angle? reset first?
+  }
 
- delay(100);
+	//drivetrain.strafe(byteA, byteB, drivetrain.convertInchesToSteps(byteC) * 10);
+
+  delay(100);
 }
