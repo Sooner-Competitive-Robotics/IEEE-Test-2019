@@ -10,12 +10,14 @@ address1 = 10
 
 while True:	
 	
+	print('begin')
+	
 	while (true):
 		camera.capture("CameraPictures/center.jpg")
 		
 		if (center("CameraPictures/center.jpg") == 1):
 			bus.write_i2c_bloc_data(address1, 0, [0, 1, 0, 1, 0, 0])
-		else if (center("CameraPictures/center.jpg") == -1):
+		elif (center("CameraPictures/center.jpg") == -1):
 			bus.write_i2c_bloc_data(address1, 0, [0, -1, 0, 1, 0, 0])
 		else:
 			break
