@@ -2,6 +2,9 @@ import smbus
 import time
 import startup
 import vision
+from gpiozero import Button
+from picamera import PiCamera
+import RPi.GPIO as GPIO
 
 bus = smbus.SMBus(1)
 address1 = 10
