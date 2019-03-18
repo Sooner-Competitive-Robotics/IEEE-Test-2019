@@ -1,7 +1,7 @@
 import smbus
 import time
 import startup
-import vision as vis
+import vision
 from gpiozero import Button
 from picamera import PiCamera
 import RPi.GPIO as GPIO
@@ -15,6 +15,8 @@ camera = PiCamera()
 camera.resolution = (600, 600)
 camera.rotation = 180
 
+myvision = vision()
+
 while True:	
 	
 	print('begin')
@@ -22,9 +24,9 @@ while True:
 	while (True):
 		camera.capture("center.jpg")
 		
-		if (vis.getCenter("center.jpg") == 1):
+		if (myvision.getCenter("center.jpg") == 1):
 			bus.write_i2c_bloc_data(address1, 0, [0, 1, 0, 1, 0, 0])
-		elif (vis.getCenter("center.jpg") == -1):
+		elif (myvision.getCenter("center.jpg") == -1):
 			bus.write_i2c_bloc_data(address1, 0, [0, -1, 0, 1, 0, 0])
 		else:
 			break
