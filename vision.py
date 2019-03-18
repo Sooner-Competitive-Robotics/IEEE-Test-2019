@@ -17,4 +17,4 @@ class vision:
 	def getCenter(image):
 		return center(image)
 
-	def 
+	#def 
