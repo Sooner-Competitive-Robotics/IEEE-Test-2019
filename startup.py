@@ -10,4 +10,4 @@ camera.resolution = (1000, 1000)
 camera.rotation = 180
 
 
-start_button = Button(start_button_pin)
+#start_button = Button(start_button_pin)
