@@ -18,11 +18,12 @@ def center(imagename):
 	cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 	cnts = imutils.grab_contours(cnts)
 	
-	if len(cnts) <= 0:
-		return -2
-	
 	for c in cnts:
 		M = cv2.moments(c)
+		
+		if M["m00"] == 0:
+			return -2
+			
 		cX = int(M["m10"] / M["m00"])
 		cY = int(M["m01"] / M["m00"])
 		
