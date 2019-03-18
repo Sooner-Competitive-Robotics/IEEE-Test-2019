@@ -25,13 +25,17 @@ while True:
 		camera.capture("center.jpg")
 		
 		if (myvision.getCenter("center.jpg") == 1):
+			print('strafe right')
 			bus.write_i2c_block_data(address1, 0, [0, 1, 1])
+			time.sleep(0.1)
 		elif (myvision.getCenter("center.jpg") == -1):
+			print('strafe left')
 			bus.write_i2c_block_data(address1, 0, [0, -1, 1])
+			time.sleep(0.1)
 		else:
 			print('center')
 			break
-		
+	print('while done')
 	#calculate distance to object	
 	# distance in inches
 	dist = 12	
@@ -44,7 +48,9 @@ while True:
 	# angle 2 for turning -180 to 180
 	#angle2 = 0
 	
+	print('before signal')
 	bus.write_i2c_block_data(address1, 0, [forward, strafe, dist])
+	print('signal sent')
 	
 	
 	
