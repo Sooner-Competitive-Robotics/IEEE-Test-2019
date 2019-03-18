@@ -27,9 +27,8 @@ void loop()
 	else if (state == Move)
 	{
 		drivetrain.setRPM(15);
-		drivetrain.strafe(1, 0, drivetrain.convertInchesToSteps(12));
-		drivetrain.strafe(dataA, dataB, drivetrain.convertInchesToSteps(dataC) * 10);
-		delay(500);
+		drivetrain.strafe(dataA, dataB, drivetrain.convertInchesToSteps(dataC));
+		delay(drivetrain.calculateStepWait(drivetrain.convertInchesToSteps(dataC)));
 		state = Idle;
 	}
 	

@@ -9,14 +9,14 @@ address1 = 10
 while True:	
 	
 	# distance in inches
-	dist = 120
+	dist = 12
 	
 	# while !turn
 	
-	forward = 0
+	forward = 1
 	turn = 1
 	
-	strafe = 0
+	strafe = 1
 	# angle 1 for turning -90 to 90
 	angle1 = 90
 	
@@ -24,8 +24,8 @@ while True:
 	angle2 = 90
 	
 	#bus.write_i2c_block_data(address1, 0, [forward, strafe, turn, dist, angle1, angle2])
-	bus.write_i2c_block_data(address1, 0, [forward, strafe, dist])
-	
+	bus.write_i2c_block_data(address1, 0, [forward, strafe, dist, angle1])
+	#bus.write_i2c_block_data(address1, 0, [forward, strafe, turn, dist, angle1, angle2])
 	#TODO: Wait for response that operation is finished
 	time.sleep(50000)
 
@@ -43,4 +43,3 @@ while True:
 	
 	# Pick block up
 	
-
