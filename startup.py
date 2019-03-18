@@ -4,7 +4,7 @@ from time import sleep
 from picamera import PiCamera
 import RPi.GPIO as GPIO
 
-def startup():
+def start():
 	camera = PiCamera()
 	camera.resolution = (1000, 1000)
 	camera.rotation = 180

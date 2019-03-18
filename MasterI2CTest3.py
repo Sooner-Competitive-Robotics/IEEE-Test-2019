@@ -7,7 +7,7 @@ bus = smbus.SMBus(1)
 address1 = 10
 # address2 = 2
 
-startup()
+start()
 
 while True:	
 	
