@@ -7,7 +7,10 @@ bus = smbus.SMBus(1)
 address1 = 10
 # address2 = 2
 
-start()
+#start()
+camera = PiCamera()
+camera.resolution = (600, 600)
+camera.rotation = 180
 
 while True:	
 	
