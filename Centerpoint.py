@@ -6,6 +6,7 @@ import imutils
 # Returns -1 if object is to the left
 #			0 if object is in the center
 #			1 if object is to the right
+#			-2 if object doesn't exist
 
 	
 def center(imagename):
@@ -16,6 +17,9 @@ def center(imagename):
 	
 	cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 	cnts = imutils.grab_contours(cnts)
+	
+	if len(cnts) <= 0:
+		return -2
 	
 	for c in cnts:
 		M = cv2.moments(c)
