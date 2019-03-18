@@ -1,7 +1,7 @@
 import smbus
 import time
 import startup
-import vision
+from vision import vision
 from gpiozero import Button
 from picamera import PiCamera
 import RPi.GPIO as GPIO
@@ -25,10 +25,11 @@ while True:
 		camera.capture("center.jpg")
 		
 		if (myvision.getCenter("center.jpg") == 1):
-			bus.write_i2c_bloc_data(address1, 0, [0, 1, 0, 1, 0, 0])
+			bus.write_i2c_block_data(address1, 0, [0, 1, 1])
 		elif (myvision.getCenter("center.jpg") == -1):
-			bus.write_i2c_bloc_data(address1, 0, [0, -1, 0, 1, 0, 0])
+			bus.write_i2c_block_data(address1, 0, [0, -1, 1])
 		else:
+			print('center')
 			break
 		
 	#calculate distance to object	
@@ -41,9 +42,9 @@ while True:
 	# angle 1 for turning -90 to 90
 	angle1 = 0
 	# angle 2 for turning -180 to 180
-	angle2 = 0
+	#angle2 = 0
 	
-	bus.write_i2c_block_data(address1, 0, [forward, strafe, turn, dist, angle1, angle2])
+	bus.write_i2c_block_data(address1, 0, [forward, strafe, dist])
 	
 	
 	

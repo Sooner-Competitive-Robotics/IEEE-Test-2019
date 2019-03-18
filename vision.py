@@ -8,13 +8,13 @@ import Centerpoint
 #This class contains static methods for analyzing pictures for object recognition.
 class vision:
 
-	def getLetter(image):
+	def getLetter(self, image):
 		return LetterRecognition.findImage(image)
 
-	def isCube(image):
+	def isCube(self, image):
 		return ShapeDetection.findShape(image)
 
-	def getCenter(image):
+	def getCenter(self, image):
 		return Centerpoint.center(image)
 
 	#def 
