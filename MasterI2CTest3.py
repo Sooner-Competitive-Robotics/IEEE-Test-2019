@@ -1,7 +1,7 @@
 import smbus
 import time
 import startup
-import vision
+import vision as vis
 from gpiozero import Button
 from picamera import PiCamera
 import RPi.GPIO as GPIO
@@ -22,9 +22,9 @@ while True:
 	while (True):
 		camera.capture("center.jpg")
 		
-		if (getCenter("center.jpg") == 1):
+		if (vis.getCenter("center.jpg") == 1):
 			bus.write_i2c_bloc_data(address1, 0, [0, 1, 0, 1, 0, 0])
-		elif (getCenter("center.jpg") == -1):
+		elif (vis.getCenter("center.jpg") == -1):
 			bus.write_i2c_bloc_data(address1, 0, [0, -1, 0, 1, 0, 0])
 		else:
 			break

@@ -9,12 +9,12 @@ import Centerpoint
 class vision:
 
 	def getLetter(image):
-		return findImage(image)
+		return LetterRecognition.findImage(image)
 
 	def isCube(image):
-		return findShape(image)
+		return ShapeDetection.findShape(image)
 
 	def getCenter(image):
-		return center(image)
+		return Centerpoint.center(image)
 
 	#def 
