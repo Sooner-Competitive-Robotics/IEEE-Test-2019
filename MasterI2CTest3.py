@@ -12,7 +12,7 @@ while True:
 	
 	print('begin')
 	
-	while (true):
+	while (True):
 		camera.capture("CameraPictures/center.jpg")
 		
 		if (center("CameraPictures/center.jpg") == 1):
