@@ -18,6 +18,8 @@ def center(imagename):
 	cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 	cnts = imutils.grab_contours(cnts)
 	
+	cX, cY = 0
+	
 	for c in cnts:
 		M = cv2.moments(c)
 		
