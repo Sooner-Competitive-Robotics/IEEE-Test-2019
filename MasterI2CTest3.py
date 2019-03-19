@@ -27,17 +27,16 @@ while True:
 		if (myvision.getCenter("center.jpg") == 1):
 			print('strafe right')
 			bus.write_i2c_block_data(address1, 0, [0, 1, 1])
-			time.sleep(0.1)
 		elif (myvision.getCenter("center.jpg") == -1):
 			print('strafe left')
 			bus.write_i2c_block_data(address1, 0, [0, -1, 1])
-			time.sleep(0.1)
 		elif (myvision.getCenter("center.jpg") == -1):
 			bus.write_i2c_block_data(address1, 0, [0, 1, 1])
-			time.sleep(0.1)
 		else:
 			print('center')
 			break
+		time.sleep(5)
+	
 	print('while done')
 	#calculate distance to object	
 	# distance in inches

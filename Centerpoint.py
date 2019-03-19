@@ -18,7 +18,8 @@ def center(imagename):
 	cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 	cnts = imutils.grab_contours(cnts)
 	
-	cX, cY = 0
+	cX = 0
+	cY = 0
 	
 	for c in cnts:
 		M = cv2.moments(c)
@@ -41,11 +42,12 @@ def center(imagename):
 	
 	# Get the x coord difference
 	diff = cX - width/2
+	print(diff)
 	
 	#####################################################
 	#    Use this value to change radius tolerance      #
 	#####################################################
-	CENTER_RANGE = 50
+	CENTER_RANGE = 100
 	
 	if diff > CENTER_RANGE:
 		return 1
