@@ -7,7 +7,7 @@ void setup()
 {
   Serial.begin(9600);
   //Initialize motors and basic drivetrain functions
-  robotSetup();
+  driveSetup();
 }
 
 void loop()

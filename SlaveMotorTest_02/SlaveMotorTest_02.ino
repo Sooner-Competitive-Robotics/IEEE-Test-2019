@@ -1,5 +1,4 @@
 #include "RobotLib.h"
-#include "StepperMotorDrivetrain.h"
 #include <Wire.h>
 #include "IEEErobot2019.h"
 
@@ -12,7 +11,7 @@ int dataA, dataB, dataC, dataD = 0;
 void setup()
 {
 	state = Idle;
-	robotSetup();
+	driveSetup();
 	Wire.begin(10);
 	Wire.setClock(100000);
 	Wire.onReceive(testEvent);
