@@ -9,7 +9,7 @@ void setup()
 	//Wire.begin(001);
 	//Wire.onRecieve(testEvent);
 	
-	driveSetup();
+	robotSetup();
 	
 	//Serial.begin(9600);
 	//robotSetup();
@@ -71,10 +71,6 @@ void loop()
 	drivetrain.strafe(-1, -1, drivetrain.convertInchesToSteps(12));
 	delay(500);
 
-
-
-
-
-	while(true){};
+	while(true){};  
 
 }
