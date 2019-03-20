@@ -38,6 +38,9 @@ while True:
 		elif (myvision.getCenter("center.jpg") == -1):
 			bus.write_i2c_block_data(address1, 0, [0, 1, 1])
 			time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(0.3)))
+		elif (myvision.getCenter("center.jpg") == -2):
+			bus.write_i2c_block_data(address1, 0, [-1, 0, 1])
+			time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(0.3)))
 		else:
 			print('center')
 			break
