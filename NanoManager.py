@@ -13,6 +13,6 @@ class NanoManager:
 	def convertInchesToSteps(self, inches):
 		rpm = 15.0
 		STEPS_PER_REVOLUTION = 200
-		return int((STEPS_PER_REVOLUTION/(4*3.141592653589))*inches)
+		return int((STEPS_PER_REVOLUTION/(4*3.141592653589))*inches*1.04)
 
                 
