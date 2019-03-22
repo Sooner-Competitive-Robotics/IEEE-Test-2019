@@ -21,14 +21,17 @@ void loop() {
   if (state == armMove)
   {
     arm.movePinion(dataB);
+    delay(1500);
   }
   else if (state == clawMove)
   {
     arm.moveFist(dataB);
+    delay(1500);
   }
   else if (state == wristMove)
   {
     arm.moveWrist(dataB);
+    delay(1500);
   }
   else if (state == Idle){
     //don't do anything
