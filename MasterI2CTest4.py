@@ -2,6 +2,7 @@ import smbus
 import time
 import startup
 from vision import vision
+from NanoManager import NanoManager
 from gpiozero import Button
 from picamera import PiCamera
 import RPi.GPIO as GPIO
@@ -16,7 +17,7 @@ camera = PiCamera()
 camera.resolution = (600, 600)
 camera.rotation = 180
 
-myvision = Vision()
+myvision = vision()
 myNano = NanoManager()
 
 while True:	
@@ -29,18 +30,22 @@ while True:
 		
 		if (myvision.getCenter("center.jpg") == 1):
 			print('strafe right')
-			bus.write_i2c_block_data(address1, 0, [0, 1, 0.3])
-			time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(0.3)))
+			bus.write_i2c_block_data(address1, 0, [0, 1, 1])
+			#time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(1)))
+			time.sleep(2)
 		elif (myvision.getCenter("center.jpg") == -1):
 			print('strafe left')
-			bus.write_i2c_block_data(address1, 0, [0, -1, 0.3])
-			time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(0.3)))
+			bus.write_i2c_block_data(address1, 0, [0, -1, 1])
+			#time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(1)))
+			time.sleep(2)
 		elif (myvision.getCenter("center.jpg") == -2):
 			print('Block not found')
 			bus.write_i2c_block_data(address1, 0, [-1, 0, 1])
-			time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(0.3)))
+			#time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(1)))
+			time.sleep(2)
 		else:
 			print('center')
+			time.sleep(2)
 			break
 	
 	print('while done')
@@ -61,6 +66,6 @@ while True:
 	print('signal sent')
 	
 	
-	while True:
+	time.sleep(500000000000)
 	
 	

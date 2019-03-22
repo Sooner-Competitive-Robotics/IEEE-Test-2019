@@ -10,7 +10,9 @@ class NanoManager:
 		return int(T) + 1
 	
 	# Calculate the number of steps needed to go x inches
-	def convertInchesToSteps(self, inches)
+	def convertInchesToSteps(self, inches):
 		rpm = 15.0
 		STEPS_PER_REVOLUTION = 200
-		return int(STEPS_PER_REVOLUTION/(4*3.141592653589))*inches);
+		return int((STEPS_PER_REVOLUTION/(4*3.141592653589))*inches)
+
+                
