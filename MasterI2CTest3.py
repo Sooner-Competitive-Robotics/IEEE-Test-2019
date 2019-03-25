@@ -17,60 +17,11 @@ camera.rotation = 180
 
 myvision = vision()
 
-while True:	
-	
-	print('begin')
-	
-	while (True):
-		camera.capture("center.jpg")
-		
-		if (myvision.getCenter("center.jpg") == 1):
-			print('strafe right')
-			bus.write_i2c_block_data(address1, 0, [0, 1, 1])
-		elif (myvision.getCenter("center.jpg") == -1):
-			print('strafe left')
-			bus.write_i2c_block_data(address1, 0, [0, -1, 1])
-		elif (myvision.getCenter("center.jpg") == -1):
-			bus.write_i2c_block_data(address1, 0, [0, 1, 1])
-		else:
-			print('center')
-			break
-		time.sleep(5)
-	
-	print('while done')
-	#calculate distance to object	
-	# distance in inches
-	dist = 12	
-	# while !turn
-	forward = 1
-	turn = 0
-	strafe = 0
-	# angle 1 for turning -90 to 90
-	angle1 = 0
-	# angle 2 for turning -180 to 180
-	#angle2 = 0
-	
-	print('before signal')
-	bus.write_i2c_block_data(address1, 0, [forward, strafe, dist])
-	print('signal sent')
-	
-	
-	
-	#TODO: Wait for response that operation is finished
-	time.sleep(50000)
-	
-	
-
-# turn method
-# def turn (target, current, 
-	
-# Method 1
-	# At JSON file location
-	
-	# Take picture
-	
-	# Locate block using distance and height calculations
-	
-	# Adjust robot to block
-	
-	# Pick block up
+print("First data incoming")
+bus.write_i2c_block_data(address1, 0, [0 ,1, 12])
+print("First data sent. sleeping for 10s")
+time.sleep(10)
+print("Second data incoming")
+bus.write_i2c_block_data(address1, 0, [1, 0, 12])
+print("Second data sent. sleeping for 4s")
+time.sleep(4)

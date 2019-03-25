@@ -30,19 +30,19 @@ while True:
 		
 		if (myvision.getCenter("center.jpg") == 1):
 			print('strafe right')
-			bus.write_i2c_block_data(address1, 0, [0, 1, 1])
+			bus.write_i2c_block_data(address1, 0, [0, 1, 12])
 			#time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(1)))
-			time.sleep(2)
+			time.sleep(4)
 		elif (myvision.getCenter("center.jpg") == -1):
 			print('strafe left')
-			bus.write_i2c_block_data(address1, 0, [0, -1, 1])
+			bus.write_i2c_block_data(address1, 0, [0, -1, 12])
 			#time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(1)))
-			time.sleep(2)
+			time.sleep(4)
 		elif (myvision.getCenter("center.jpg") == -2):
 			print('Block not found')
-			bus.write_i2c_block_data(address1, 0, [-1, 0, 1])
+			bus.write_i2c_block_data(address1, 0, [-1, 0, 12])
 			#time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(1)))
-			time.sleep(2)
+			time.sleep(4)
 		else:
 			print('center')
 			time.sleep(2)
@@ -66,6 +66,6 @@ while True:
 	print('signal sent')
 	
 	
-	time.sleep(500000000000)
+	time.sleep(5000000)
 	
 	
