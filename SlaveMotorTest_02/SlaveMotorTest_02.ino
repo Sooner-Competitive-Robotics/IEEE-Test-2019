@@ -38,7 +38,7 @@ void testEvent()
   
   int byteA = 0; //strafe forward
   int byteB = 0; //strafe sideways
-    int byteC = 0; // distance
+  int byteC = 0; // distance
   int byteD = 0; // angle
   
   while(Wire.available()) 
