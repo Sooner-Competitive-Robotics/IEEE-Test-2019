@@ -19,14 +19,11 @@ void setup()
 
 void loop()
 {
-  if (state == Idle)
-  {
-    // Don't do anything
-  }
-  else if (state == Move)
+  if (state == Move)
   {
     drivetrain.setRPM(15);
     drivetrain.strafe(dataA, dataB, drivetrain.convertInchesToSteps(dataC));
+    //
     state = Idle;
   }
   delay(10);
