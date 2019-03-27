@@ -23,8 +23,9 @@ void loop()
   {
     drivetrain.setRPM(15);
     Serial.println(dataA);
-    drivetrain.strafe(dataA, dataB, drivetrain.convertInchesToSteps(dataC));
-    //
+    mpu.calibrateGyro();
+    //drivetrain.strafe(dataA, dataB, drivetrain.convertInchesToSteps(dataC));
+    drivetrain.smartDrive(dataA, dataB, drivetrain.convertInchesToSteps(dataC), dataD);
     state = Idle;
   }
   delay(10);
@@ -44,35 +45,40 @@ void testEvent()
     int number = (int)Wire.read();
     Serial.println(number);
 
-    if (counter == 1){
+    // forward
+    if (counter == 1)
+    {
       byteA = number;
       if (number == 255)
       {
-        byteA = -1;
+        //byteA = -1;
       }
     }
-  
-    if (counter == 2){
+    // strafe
+    else if (counter == 2)
+    {
       byteB = number;
       if (number == 255)
       {
-        byteB = -1;
+        //byteB = -1;
       }
     }
-  
-    if (counter == 3){
+    // distance
+    else if (counter == 3)
+    {
       byteC = number;
       if (number == 255)
       {
-        byteC = -1;
+        //byteC = -1;
       }
     }
-  
-    if (counter == 4){
+    // angle
+    else if (counter == 4)
+    {
       byteD = number;
       if (number == 255)
       {
-        byteD = -1;
+        //byteD = -1;
       }
       break;
     }
