@@ -9,6 +9,7 @@ int dataA, dataB;
 
 void setup() {
   // put your setup code here, to run once:
+  Serial.begin(9600);
   state = Idle;
   armSetup();
   Wire.begin(20);
@@ -57,11 +58,14 @@ void testEvent()
       byteB = number;
       break;
     }
-
+    
     counter++;
   }
   dataA = byteA;
   dataB = byteB;
+
+  Serial.println("A: " + dataA);
+  Serial.println("B: " + dataB);
 
   if (dataA = 0) {
     state = Idle;
