@@ -25,7 +25,7 @@ void loop()
     Serial.println(dataA);
     mpu.calibrateGyro();
     //drivetrain.strafe(dataA, dataB, drivetrain.convertInchesToSteps(dataC));
-    drivetrain.smartDrive(dataA, dataB, drivetrain.convertInchesToSteps(dataC), dataD);
+    smartDrive(dataA, dataB, drivetrain.convertInchesToSteps(dataC), dataD);
     state = Idle;
   }
   delay(10);
