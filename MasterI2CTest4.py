@@ -28,23 +28,25 @@ while True:
 		# read image
 		camera.capture("center.jpg")
 		
-		if (myvision.getCenter("center.jpg") == 1):
-			print('strafe right')
+		result = myvision.getCenter("center.jpg")
+		
+		if (result == 1):
+			print("strafe right")
 			bus.write_i2c_block_data(address1, 0, [0, 1, 12])
-			#time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(1)))
-			time.sleep(4)
-		elif (myvision.getCenter("center.jpg") == -1):
-			print('strafe left')
+			print("sleeping for " + str(myNano.getWaitTime(myNano.convertInchesToSteps(1))) + "sec")
+			time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(1)))
+		elif (result == -1):
+			print("strafe left")
 			bus.write_i2c_block_data(address1, 0, [0, -1, 12])
-			#time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(1)))
-			time.sleep(4)
-		elif (myvision.getCenter("center.jpg") == -2):
-			print('Block not found')
+			print("sleeping for " + str(myNano.getWaitTime(myNano.convertInchesToSteps(1))) + "sec")
+			time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(1)))
+		elif (result == -2):
+			print("Block not found")
 			bus.write_i2c_block_data(address1, 0, [-1, 0, 12])
-			#time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(1)))
-			time.sleep(4)
+			print("sleeping for " + str(myNano.getWaitTime(myNano.convertInchesToSteps(1))) + "sec")
+			time.sleep(myNano.getWaitTime(myNano.convertInchesToSteps(1)))
 		else:
-			print('center')
+			print("center")
 			time.sleep(2)
 			break
 	
@@ -65,7 +67,9 @@ while True:
 	bus.write_i2c_block_data(address1, 0, [forward, strafe, dist])
 	print('signal sent')
 	
-	
 	time.sleep(5000000)
 	
-	
+def driveRobot(self, address, data):
+		bus.write_i2c_block_data(address, 0, data)
+		time.sleep(getWaitTime(convertInchesToSteps(data[2])))
+
