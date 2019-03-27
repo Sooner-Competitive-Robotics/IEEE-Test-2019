@@ -22,6 +22,7 @@ void loop()
   if (state == Move)
   {
     drivetrain.setRPM(15);
+    Serial.println(dataA);
     drivetrain.strafe(dataA, dataB, drivetrain.convertInchesToSteps(dataC));
     //
     state = Idle;
@@ -45,18 +46,34 @@ void testEvent()
 
     if (counter == 1){
       byteA = number;
+      if (number == 255)
+      {
+        byteA = -1;
+      }
     }
   
     if (counter == 2){
       byteB = number;
+      if (number == 255)
+      {
+        byteB = -1;
+      }
     }
   
     if (counter == 3){
       byteC = number;
+      if (number == 255)
+      {
+        byteC = -1;
+      }
     }
   
     if (counter == 4){
       byteD = number;
+      if (number == 255)
+      {
+        byteD = -1;
+      }
       break;
     }
     counter++;
