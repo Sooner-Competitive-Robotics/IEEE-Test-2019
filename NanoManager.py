@@ -21,7 +21,6 @@ class NanoManager:
 		print("waiting: " + str(waitTime))
 		time.sleep(waitTime)
 		
-	
 	def moveArm(address, state, angle):
 		bus.write_i2c_block_data(address, 0, [state, angle])
 		print("waiting: 1")
