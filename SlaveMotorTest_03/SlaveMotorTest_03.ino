@@ -28,6 +28,10 @@ void loop()
     smartDrive(dataA, dataB, drivetrain.convertInchesToSteps(dataC), dataD);
     state = Idle;
   }
+  else if (state == Idle)
+  {
+    drivetrain.rest();
+  }
   delay(10);
 }
 

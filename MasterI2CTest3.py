@@ -19,7 +19,6 @@ camera.rotation = 180
 myvision = vision()
 myNano = NanoManager()
 
-
 def driveRobot(address, forward, strafe, dist):
     bus.write_i2c_block_data(address, 0, [forward, strafe, dist])
     waitTime = myNano.getWaitTime(myNano.convertInchesToSteps(dist))
@@ -30,3 +29,4 @@ driveRobot(address1, 1, 0, 12)
 driveRobot(address1, 0, 1, 12)
 driveRobot(address1, -1, 0, 12)
 driveRobot(address1, 0, -1, 12)
+  
