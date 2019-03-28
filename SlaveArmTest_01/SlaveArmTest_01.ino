@@ -28,7 +28,6 @@ void loop() {
   {
     arm.movePinion(dataB);
   }
-  
   else if (state == clawMove)
   {
     arm.moveFist(dataB);
@@ -40,7 +39,7 @@ void loop() {
   else if (state == Idle){
     //don't do anything
   }
-  
+  delay(10);
 }
 
 void testEvent()
