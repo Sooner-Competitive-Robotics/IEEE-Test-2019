@@ -9,7 +9,7 @@ import RPi.GPIO as GPIO
 
 bus = smbus.SMBus(1)
 address1 = 10
-# address2 = 2
+address2 = 20
 
 #start()
 camera = PiCamera()
@@ -19,14 +19,21 @@ camera.rotation = 180
 myvision = vision()
 myNano = NanoManager()
 
-def driveRobot(address, forward, strafe, dist):
-    bus.write_i2c_block_data(address, 0, [forward, strafe, dist])
-    waitTime = myNano.getWaitTime(myNano.convertInchesToSteps(dist))
-    print("waiting: " + str(waitTime))
-    time.sleep(waitTime)
+#def driveRobot(address, forward, strafe, dist):
+#    bus.write_i2c_block_data(address, 0, [forward, strafe, dist])
+#    waitTime = myNano.getWaitTime(myNano.convertInchesToSteps(dist))
+#    print("waiting: " + str(waitTime))
+#    time.sleep(waitTime)
 
-driveRobot(address1, 1, 0, 12)
-driveRobot(address1, 0, 1, 12)
-driveRobot(address1, -1, 0, 12)
-driveRobot(address1, 0, -1, 12)
+
+print("Before send")
+#bus.write_i2c_block_data(address2, 0, [1, 1])
+#bus.write_i2c_block_data(address2, 0, [3, 90])
+myNano.driveRobot2(address1, 1, 0, 12)
+print("After send")
+
+#driveRobot(address1, 1, 0, 12)
+#driveRobot(address1, 0, 1, 12)
+#driveRobot(address1, -1, 0, 12)
+#driveRobot(address1, 0, -1, 12)
   

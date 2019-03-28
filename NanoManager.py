@@ -1,5 +1,6 @@
 import smbus
 import math
+import time
 
 class NanoManager:
 	
@@ -13,15 +14,15 @@ class NanoManager:
 	def convertInchesToSteps(self, inches):
 		STEPS_PER_REVOLUTION = 200
 		return int((STEPS_PER_REVOLUTION/(4*math.pi))*inches*1.04)
+
+	def driveRobot(self, address, forward, strafe, dist):
+                bus = smbus.SMBus(1)
+                bus.write_i2c_block_data(address, 0, [forward, strafe, dist])
+                waitTime = NanoManager.getWaitTime(NanoManager, NanoManager.convertInchesToSteps(NanoManager, dist))
+                print("waiting: " + str(waitTime))
+                time.sleep(waitTime)
 		
-	def driveRobot(address, forward, strafe, distance, angle):
-		bus = smbus.SMBus(1)
-		bus.write_i2c_block_data(address, 0, [forward, strafe, dist])
-		waitTime = myNano.getWaitTime(myNano.convertInchesToSteps(dist))
-		print("waiting: " + str(waitTime))
-		time.sleep(waitTime)
-		
-	def moveArm(address, state, angle):
+	def moveArm(self, address, state, angle):
 		bus.write_i2c_block_data(address, 0, [state, angle])
 		print("waiting: 1")
 		time.sleep(1)
