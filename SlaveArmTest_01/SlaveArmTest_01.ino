@@ -9,9 +9,10 @@ int dataA, dataB;
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
   state = Idle;
+  Serial.println("not ready");
   armSetup();
+  Serial.println("ready");
   Wire.begin(20);
   Wire.setClock(100000);
   Wire.onReceive(testEvent);
@@ -22,21 +23,22 @@ void loop() {
   if (state == armMove)
   {
     arm.movePinion(dataB);
-    delay(1500);
+    state = Idle;
   }
   else if (state == clawMove)
   {
     arm.moveFist(dataB);
-    delay(1500);
+    state = Idle;
   }
   else if (state == wristMove)
   {
     arm.moveWrist(dataB);
-    delay(1500);
+    state = Idle;
   }
   else if (state == Idle){
     //don't do anything
   }
+  delay(10);
 }
 
 void testEvent()
@@ -49,6 +51,7 @@ void testEvent()
   while(Wire.available())
   {
     int number = (int)Wire.read();
+    Serial.println(number);
 
     if (counter == 1) {
       byteA = number;
@@ -64,19 +67,16 @@ void testEvent()
   dataA = byteA;
   dataB = byteB;
 
-  Serial.println("A: " + dataA);
-  Serial.println("B: " + dataB);
-
-  if (dataA = 0) {
+  if (dataA == 0) {
     state = Idle;
   }
-  else if (dataA = 1) {
+  else if (dataA == 1) {
     state = armMove;
   }
-  else if (dataA = 2) {
+  else if (dataA == 2) {
     state = clawMove;
   }
-  else if (dataA = 3) {
+  else if (dataA == 3) {
     state = wristMove;
   }
 }
