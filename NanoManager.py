@@ -1,4 +1,5 @@
 import smbus
+import math
 
 class NanoManager:
 	
@@ -10,9 +11,8 @@ class NanoManager:
 	
 	# Calculate the number of steps needed to go x inches
 	def convertInchesToSteps(self, inches):
-		rpm = 15.0
 		STEPS_PER_REVOLUTION = 200
-		return int((STEPS_PER_REVOLUTION/(4*3.141592653589))*inches*1.04)
+		return int((STEPS_PER_REVOLUTION/(4*math.pi))*inches*1.04)
 		
 	def driveRobot(address, forward, strafe, distance, angle):
 		bus = smbus.SMBus(1)
