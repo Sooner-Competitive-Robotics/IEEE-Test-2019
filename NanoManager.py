@@ -7,7 +7,7 @@ class NanoManager:
 	def getWaitTime(self, steps):
                 rpm = 15.0
                 STEPS_PER_REVOLUTION = 200
-                return int(steps/200*(15/rpm)*3) + 2
+                return int(steps/200*(15/rpm)*4) + 2
 	
 	# Calculate the number of steps needed to go x inches
 	def convertInchesToSteps(self, inches):
