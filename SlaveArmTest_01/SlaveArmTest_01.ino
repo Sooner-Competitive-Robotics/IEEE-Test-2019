@@ -12,9 +12,10 @@ void setup() {
   Serial.begin(11520);
   state = Idle;
   armSetup();
-  arm.moveWrist(0);
-  arm.moveFist(0);
-  arm.movePinion(-1);
+  //arm.moveWrist(30);
+  wristServo.write(70);     // 70 is 0
+  //arm.moveFist(0);
+  //arm.movePinion(-1);
   Wire.begin(20);
   Wire.setClock(100000);
   Wire.onReceive(testEvent);
