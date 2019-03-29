@@ -27,15 +27,13 @@ myNano = NanoManager()
 
 
 print("Before send")
-#bus.write_i2c_block_data(address2, 0, [1, 1])
-#bus.write_i2c_block_data(address2, 0, [3, 90])
-myNano.driveRobot(address1, 1, 0, 12)
-myNano.driveRobot(address1, -1, 0, 12)
+myNano.moveArm(address2, 3, 140)
+#myNano.moveArm(address2, 3, 100)
+#myNano.moveArm(address2, 2, 30)  
+
+#myNano.driveRobot(address1, 1, 0, 12)
+#myNano.driveRobot(address1, -1, 0, 12)
 
 print("After send")
 
-#driveRobot(address1, 1, 0, 12)
-#driveRobot(address1, 0, 1, 12)
-#driveRobot(address1, -1, 0, 12)
-#driveRobot(address1, 0, -1, 12)
   
