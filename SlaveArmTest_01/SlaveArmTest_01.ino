@@ -15,8 +15,7 @@ void setup() {
   state = Idle;
   armSetup();
   arm.moveWrist(130);    // Default state of 0 dgs
-  Serial.print("fist");
-  arm.moveFist(90);
+  //arm.moveFist(90);
   Wire.begin(20);
   Wire.setClock(100000);
   Wire.onReceive(testEvent);
@@ -26,18 +25,19 @@ void loop() {
   // put your main code here, to run repeatedly:
   if (state == armMove)
   {
+    Serial.println("moving pinion");
     arm.movePinion(dataB);
     state = Idle;
   }
   else if (state == clawMove)
   {
+    Serial.println("moving claw");
     arm.moveFist(dataB);
     state = Idle;
   }
   else if (state == wristMove)
   {
     Serial.print("moving wrist");
-    Serial.print("dataB: " + dataB);
     arm.moveWrist(dataB);
     state = Idle;
   }
@@ -72,7 +72,7 @@ void testEvent()
   dataA = byteA;
   dataB = byteB;
 
-  if (dataA = 0) {
+  if (dataA == 0) {
     state = Idle;
   }
   else if (dataA == 1) {
