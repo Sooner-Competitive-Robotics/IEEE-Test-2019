@@ -23,7 +23,8 @@ class NanoManager:
                 time.sleep(waitTime)
 		
 	def moveArm(self, address, state, angle):
-		bus.write_i2c_block_data(address, 0, [state, angle])
-		print("waiting: 1")
-		time.sleep(1)
+                bus = smbus.SMBus(1)
+                bus.write_i2c_block_data(address, 0, [state, angle])
+                print("waiting: 1")
+                time.sleep(1)
     

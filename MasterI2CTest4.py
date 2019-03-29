@@ -37,13 +37,13 @@ while True:
 		
 		if (result == 1):
 			print("strafe right")
-			driveRobot(address1, 0, 1, 1)
+			#myNano.driveRobot(address1, 0, 1, 1)
 		elif (result == -1):
 			print("strafe left")
-			driveRobot(address1, 0, -1, 1)
+			#myNano.driveRobot(address1, 0, -1, 1)
 		elif (result == -2):
 			print("Block not found")
-			driveRobot(address1, -1, 0, 1)
+			#myNano.driveRobot(address1, -1, 0, 1)
 		else:
 			print("center")
 			time.sleep(2)
@@ -58,7 +58,7 @@ while True:
 	angle = 0
 	
 	print('before signal')
-	driveRobot(address1, 1, 0, 12)
+	#myNano.driveRobot(address1, 1, 0, 12)
 	print('signal sent')
 	
 	time.sleep(5000000)
