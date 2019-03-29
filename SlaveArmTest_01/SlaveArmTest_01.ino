@@ -2,6 +2,8 @@
 #include <Wire.h>
 #include "IEEErobot2019.h"
 
+// 120   
+
 enum State {Idle, armMove, clawMove, wristMove};
 State state;
 
@@ -12,11 +14,7 @@ void setup() {
   Serial.begin(11520);
   state = Idle;
   armSetup();
-  //arm.moveWrist(30);
-  wristServo.write(70);     // 70 is 0
-  
-  //arm.moveFist(0);
-  //arm.movePinion(-1);
+  arm.moveWrist(70);    // Default state of 0 dgs
   Wire.begin(20);
   Wire.setClock(100000);
   Wire.onReceive(testEvent);
@@ -57,12 +55,10 @@ void testEvent()
     if (counter == 1) {
       byteA = number;
     }
-
     if (counter == 2) {
       byteB = number;
       break;
     }
-    
     counter++;
   }
   dataA = byteA;

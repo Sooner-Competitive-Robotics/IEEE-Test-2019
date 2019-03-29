@@ -14,7 +14,10 @@ def center(imagename):
 	gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 	blurred = cv2.GaussianBlur(gray, (5, 5), 0)
 	thresh = cv2.threshold(blurred, 200, 255, cv2.THRESH_BINARY)[1]
-	
+	cv2.imshow("blr", blurred)
+	cv2.imshow("image", image)
+	cv2.imshow("thresh", thresh)
+	cv2.waitKey(0)
 	cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 	cnts = imutils.grab_contours(cnts)
 	
@@ -34,6 +37,7 @@ def center(imagename):
 	width, height = image.shape[:2]
 	
 	# Get the x coord difference
+	print("cX " + str(cX))
 	diff = cX - width/2
 	print(diff)
 	
@@ -41,6 +45,9 @@ def center(imagename):
 	#    Use this value to change radius tolerance      #
 	#####################################################
 	CENTER_RANGE = 100
+	
+	if diff == 300 or diff == -300:
+		return -2
 	
 	if diff > CENTER_RANGE:
 		return 1
