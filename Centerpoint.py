@@ -57,4 +57,4 @@ def center(imagename):
 		return 0
 
 
-#center("center.jpg")
+center("center.jpg")

@@ -3,6 +3,7 @@
 #include "IEEErobot2019.h"
 
 // 120   
+// 130 is facing down
 
 enum State {Idle, armMove, clawMove, wristMove};
 State state;
@@ -14,8 +15,8 @@ void setup() {
   Serial.begin(11520);
   state = Idle;
   armSetup();
-  arm.moveWrist(130);    // Default state of 0 dgs
-  //arm.moveFist(90);
+  arm.moveWrist(140);    // Default state of 0 dgs
+  arm.moveFist(180);
   Wire.begin(20);
   Wire.setClock(100000);
   Wire.onReceive(testEvent);
