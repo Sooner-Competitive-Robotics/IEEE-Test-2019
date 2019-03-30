@@ -17,6 +17,7 @@ def driveRobot(address, forward, strafe, dist):
 # then moves accordingly to center itself. 
 
 address1 = 10
+address2 = 20
 bus = smbus.SMBus(1)
 camera = PiCamera()
 camera.resolution = (600, 600)
@@ -37,15 +38,16 @@ while True:
 		
 		if (result == 1):
 			print("strafe right")
-			#myNano.driveRobot(address1, 0, 1, 1)
+			myNano.driveRobot(address1, 0, 1, 1)
 		elif (result == -1):
 			print("strafe left")
-			#myNano.driveRobot(address1, 0, -1, 1)
+			myNano.driveRobot(address1, 0, -1, 1)
 		elif (result == -2):
 			print("Block not found")
-			#myNano.driveRobot(address1, -1, 0, 1)
+			myNano.driveRobot(address1, -1, 0, 1)
 		else:
 			print("center")
+			myNano.moveArm(address2, 3, 70)
 			time.sleep(2)
 			break
 	
@@ -58,7 +60,9 @@ while True:
 	angle = 0
 	
 	print('before signal')
-	#myNano.driveRobot(address1, 1, 0, 12)
+	myNano.driveRobot(address1, 1, 0, 12)
+	myNano.moveArm(address2, 2, 0)
+	myNano.moveArm(address2, 3, 160)
 	print('signal sent')
 	
 	time.sleep(5000000)

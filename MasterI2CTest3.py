@@ -27,9 +27,12 @@ myNano = NanoManager()
 
 
 print("Before send")
-myNano.moveArm(address2, 3, 140)
-#myNano.moveArm(address2, 3, 100)
-#myNano.moveArm(address2, 2, 30)  
+#myNano.moveArm(address2, 3, 160)
+#myNano.moveArm(address2, 3, 70)
+#myNano.moveArm(address2, 2, 90)
+#myNano.moveArm(address2, 2, 40)
+myNano.moveArm(address2, 2, 40)
+myNano.moveArm(address2, 2, 180)
 
 #myNano.driveRobot(address1, 1, 0, 12)
 #myNano.driveRobot(address1, -1, 0, 12)
