@@ -7,7 +7,6 @@ State state;
 
 int dataA, dataB, dataC, dataD = 0;
 
-
 void setup()
 {
   state = Idle;
@@ -15,10 +14,16 @@ void setup()
   Wire.begin(10);
   Wire.setClock(100000);
   Wire.onReceive(testEvent);
+  mpu.calibrateGyro();
 }
 
 void loop()
 {
+  smartDrive(0, 0, drivetrain.convertInchesToSteps(0), 90);
+  smartDrive(0, 0, drivetrain.convertInchesToSteps(0), -90);
+
+  Serial.println(GYRO_ROLL);
+
   if (state == Move)
   {
     drivetrain.setRPM(15);
@@ -32,7 +37,8 @@ void loop()
   {
     drivetrain.rest();
   }
-  delay(10);
+  //delay(10);
+  //drivetrain.steppe(0,1);
 }
 
 void testEvent()

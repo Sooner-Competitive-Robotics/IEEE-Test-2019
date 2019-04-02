@@ -15,7 +15,7 @@ void setup() {
   Serial.begin(11520);
   state = Idle;
   armSetup();
-  arm.moveWrist(140);    // Default state of 0 dgs
+  arm.moveWrist(80);    // Default state of 0 dgs
   arm.moveFist(180);
   Wire.begin(20);
   Wire.setClock(100000);
