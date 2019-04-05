@@ -44,6 +44,9 @@ GPIO.setup(BUTTON_PIN, GPIO.OUT)
 GPIO.output(GREEN_LED_PIN, GPIO.LOW)
 GPIO.output(RED_LED_PIN, GPIO.LOW)
 
+myNano.driveRobot(address1, 0, 0, 0, 90)
+time.sleep(10000)
+
 while True:
         print('begin')
 
@@ -53,6 +56,7 @@ while True:
         
         if not os.path.isfile("/home/pi/locations/mars1.json"):
                 copyjson.copyjson()
+                GPIO.output(GREEN_LED_PIN, GPIO.HIGH)
                 sys.exit(0)
         
         # button pressed = round code starting
@@ -98,48 +102,38 @@ while True:
                 if (minX < 4):
                         #turn -90
                         myNano.driveRobot(address1, 0, 0, 0, -90)
-                        #driveRobot(address1, data)
                 else:
                         #turn 90
                         myNano.driveRobot(address1, 0, 0, 0, 90)
-                        #driveRobot(address1, data)
 
                 #drive to cube
                 dist = 12*(minX - 4 - 1)
-                myNano.driveRobot(1, 0, dist)
+                myNano.driveRobot(1, 0, dist, 0)
         elif (minY > 4):
                 dist = 12*abs(minX - 4)
                 if (minX < 4):
                         #strafe left
-                        myNano.driveRobot(address1, 0, -1, dist)
-                        #driveRobot(address1, data)
+                        myNano.driveRobot(address1, 0, -1, dist, 0)
                 elif (minX > 4):
                         # strafe right
-                        myNano.driveRobot(address1, 0, 1, dist)
-                        #driveRobot(address1, data)
+                        myNano.driveRobot(address1, 0, 1, dist, 0)
                 dist = 12*(minY - 4 - 1)
                 print(str(dist))
-                myNano.driveRobot(address1, 1, 0, 12)
-                #driveRobot(address1, data)
+                myNano.driveRobot(address1, 1, 0, 12, 0)
         elif (minY < 4):
                 #turn 180
-                #myNano.driveRobot(address1, 0, 0, 0, 90)
-                #driveRobot(address1, data)
-                #myNano.driveRobot(address1, 0, 0, 0, 90)
-                #driveRobot(address1, data)
+                myNano.driveRobot(address1, 0, 0, 0, 90)
+                myNano.driveRobot(address1, 0, 0, 0, 90)
                 dist = 12*abs(minX - 4)
                 print(dist);
                 if (minX < 4):
                         #strafe right (reverse because we turned 180)
-                        myNano.driveRobot(address1, 0, 1, dist)
-                        #driveRobot(address1, data)
+                        myNano.driveRobot(address1, 0, 1, dist, 0)
                 elif (minX > 4):
                         #strafe left
-                        myNano.driveRobot(address1, 0, -1, dist)
-                        #driveRobot(address1, data)
+                        myNano.driveRobot(address1, 0, -1, dist, 0)
                 dist = 12*(minY - 4 - 1)
-                myNano.driveRobot(address1, 1, 0, dist)
-                #driveRobot(address1, data)
+                myNano.driveRobot(address1, 1, 0, dist, 0)
                 
         # optimal angle for looking for cube
         myNano.moveArm(address2, 3, 140)
@@ -152,22 +146,22 @@ while True:
                 
                 # Cube is to the right
                 if (center == 1):
-                        myNano.driveRobot(address1, 0, 1, 2)
+                        myNano.driveRobot(address1, 0, 1, 2, 0)
                         movedRight += 1
                 # Cube is to the left
                 elif (center == -1):
-                        myNano.driveRobot(address1, 0, -1, 2)
+                        myNano.driveRobot(address1, 0, -1, 2, 0)
                         movedLeft += 1
                 elif (center == -2):
                         print("Block not found")
-                        myNano.driveRobot(address1, -1, 0, 1)
+                        myNano.driveRobot(address1, -1, 0, 1, 0)
                         movedBack += 1
                 # Cube is centered. Move forward to pick cube up.
                 else:
                         distance = myvision.getDist2Cube("center.jpg")
                         myNano.moveArm(address2, 3, 60)
                         print("distance to cube: " + str(distance))
-                        myNano.driveRobot(address1, 1, 0, distance)
+                        myNano.driveRobot(address1, 1, 0, distance, 0)
                         
                         # Move arm and pick it up
                         break;
@@ -179,13 +173,13 @@ while True:
         myNano.moveArm(address2, 2, 180)
 
         while(movedRight != 0):
-                myNano.driveRobot(address1, 0, -1, 2)
+                myNano.driveRobot(address1, 0, -1, 2, 0)
                 movedRight -= 1
         while(movedLeft != 0):
-                myNano.driveRobot(address1, 0, 1, 2)
+                myNano.driveRobot(address1, 0, 1, 2, 0)
                 movedLeft -= 1
         while(movedBack != 0):
-                myNano.driveRobot(address1, 1, 0, 1)
+                myNano.driveRobot(address1, 1, 0, 1, 0)
                 movedBack -= 1
         
         myNano.driveRobot(address1, -1, 0, distance)
@@ -200,30 +194,24 @@ while True:
                 dist = 12*abs(minX - 4)
                 if (minX < 4):
                         #strafe right
-                        myNano.driveRobot(address1, 0, 1, dist)
-                        #driveRobot(address1, data)
+                        myNano.driveRobot(address1, 0, 1, dist, 0)
                 elif (minX > 4):
                         # strafe left
-                        myNano.driveRobot(address1, 0, -1, dist)
-                        #driveRobot(address1, data)
+                        myNano.driveRobot(address1, 0, -1, dist, 0)
                 dist = 12*(minY - 4 - 1)
                 print(str(dist))
-                myNano.driveRobot(address1, -1, 0, 12)
-                #driveRobot(address1, data)
+                myNano.driveRobot(address1, -1, 0, 12, 0)
         elif (minY < 4):
                 dist = 12*abs(minX - 4)
                 print(dist);
                 if (minX < 4):
                         #strafe left (reverse because we turned 180)
-                        myNano.driveRobot(address1, 0, -1, dist)
-                        #driveRobot(address1, data)
+                        myNano.driveRobot(address1, 0, -1, dist, 0)
                 elif (minX > 4):
                         #strafe right
-                        myNano.driveRobot(address1, 0, 1, dist)
-                        #driveRobot(address1, data)
+                        myNano.driveRobot(address1, 0, 1, dist, 0)
                 dist = 12*(minY - 4 - 1)
-                myNano.driveRobot(address1, -1, 0, dist)
-                #driveRobot(address1, data)
+                myNano.driveRobot(address1, -1, 0, dist, 0)
 
 
         #end of code, delete json file
