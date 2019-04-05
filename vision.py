@@ -4,6 +4,7 @@ import random
 import LetterRecognition
 import ShapeDetection
 import Centerpoint
+import CalcDist
 
 #This class contains static methods for analyzing pictures for object recognition.
 class vision:
@@ -17,4 +18,5 @@ class vision:
 	def getCenter(self, image):
 		return Centerpoint.center(image)
 
-	#def 
+	def getDist2Cube(self, image):
+		return CalcDist.calcDist(image)
