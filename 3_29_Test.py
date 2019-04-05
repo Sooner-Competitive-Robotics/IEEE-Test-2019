@@ -7,13 +7,19 @@ from vision import vision
 from gpiozero import Button
 from picamera import PiCamera
 import jsonread
-#import copyjson
+import copyjson
 from NanoManager import NanoManager
+import os
+import sys
 
 # IEEE competition code
 
 address1 = 10                                           # Address to the drive nano
 address2 = 20                                           # Address to the arm nano
+
+BUTTON_PIN = 14
+GREEN_LED_PIN = 18
+RED_LED_PIN = 15
 
 bus = smbus.SMBus(1)
 camera = PiCamera()
@@ -23,15 +29,37 @@ camera.rotation = 180
 myvision = vision()
 myNano = NanoManager()
 
-movedLeft = 0;
-movedRight = 0;
-movedBack = 0;
+movedLeft = 0
+movedRight = 0
+movedBack = 0
+
+distance = 0
 
 # List of info to send. Format is [forward, side, distance]
 #data = []cd
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(GREEN_LED_PIN, GPIO.OUT)
+GPIO.setup(RED_LED_PIN, GPIO.OUT)
+GPIO.setup(BUTTON_PIN, GPIO.OUT)
+GPIO.output(GREEN_LED_PIN, GPIO.LOW)
+GPIO.output(RED_LED_PIN, GPIO.LOW)
 
 while True:
         print('begin')
+
+        #check if file is in location
+        #if true, proceed to round code (and button)
+        #if not, run through jsonread
+        
+        if not os.path.isfile("/home/pi/locations/mars1.json"):
+                copyjson.copyjson()
+                sys.exit(0)
+        
+        # button pressed = round code starting
+        while True:
+                start = GPIO.input(BUTTON_PIN)
+                if start == True:
+                        break;
         
         # Get JSON file location
         data = jsonread.jsonread()
@@ -114,7 +142,7 @@ while True:
                 #driveRobot(address1, data)
                 
         # optimal angle for looking for cube
-        #myNano.moveArm(address2, 3, 120)
+        myNano.moveArm(address2, 3, 140)
                 
         # Align to the cube
         while True:
@@ -124,29 +152,43 @@ while True:
                 
                 # Cube is to the right
                 if (center == 1):
-                        myNano.driveRobot(address1, 0, 1, 1)
+                        myNano.driveRobot(address1, 0, 1, 2)
+                        movedRight += 1
                 # Cube is to the left
                 elif (center == -1):
-                        myNano.driveRobot(address1, 0, -1, 1)
+                        myNano.driveRobot(address1, 0, -1, 2)
+                        movedLeft += 1
                 elif (center == -2):
                         print("Block not found")
                         myNano.driveRobot(address1, -1, 0, 1)
+                        movedBack += 1
                 # Cube is centered. Move forward to pick cube up.
                 else:
-                        myNano.driveRobot(address1, 1, 0, 12)
-                        #driveRobot(address1, data)
+                        distance = myvision.getDist2Cube("center.jpg")
+                        myNano.moveArm(address2, 3, 60)
+                        print("distance to cube: " + str(distance))
+                        myNano.driveRobot(address1, 1, 0, distance)
+                        
                         # Move arm and pick it up
                         break;
                         
         # pick up block
-
-        myNano.moveArm(address2, 3, 60)
         myNano.moveArm(address2, 2, 0)
         myNano.moveArm(address2, 3, 160)
         
         myNano.moveArm(address2, 2, 180)
 
-        myNano.driveRobot(address1, -1, 0, 12)
+        while(movedRight != 0):
+                myNano.driveRobot(address1, 0, -1, 2)
+                movedRight -= 1
+        while(movedLeft != 0):
+                myNano.driveRobot(address1, 0, 1, 2)
+                movedLeft -= 1
+        while(movedBack != 0):
+                myNano.driveRobot(address1, 1, 0, 1)
+                movedBack -= 1
+        
+        myNano.driveRobot(address1, -1, 0, distance)
         #myNano.driveRobot(address1, 0, 0, 0, 90)
         #myNano.driveRobot(address1, 0, 0, 0, 90)
 
@@ -182,8 +224,12 @@ while True:
                 dist = 12*(minY - 4 - 1)
                 myNano.driveRobot(address1, -1, 0, dist)
                 #driveRobot(address1, data)
-        
 
+
+        #end of code, delete json file
+        os.remove("/home/pi/locations/mars1.json")
+
+        GPIO.output(RED_LED_PIN, GPIO.HIGH)
         time.sleep(10000)
         
         #repeat code for remaining cubes
