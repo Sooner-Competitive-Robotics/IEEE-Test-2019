@@ -19,4 +19,4 @@ class vision:
 		return Centerpoint.center(image)
 
 	def getDist2Cube(self, image):
-		return CalcDist.calcDist(image)
+		return int(CalcDist.calcDist(image)) + 3
