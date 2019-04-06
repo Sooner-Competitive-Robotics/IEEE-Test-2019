@@ -21,6 +21,8 @@ BUTTON_PIN = 14
 GREEN_LED_PIN = 18
 RED_LED_PIN = 15
 
+VIEWING_ANGLE = 150
+
 bus = smbus.SMBus(1)
 camera = PiCamera()
 camera.resolution = (600, 600)
@@ -32,7 +34,8 @@ myNano = NanoManager()
 movedLeft = 0
 movedRight = 0
 movedBack = 0
-
+found_cube = True
+back_counter = 0
 distance = 0
 
 # List of info to send. Format is [forward, side, distance]
@@ -44,7 +47,15 @@ GPIO.setup(BUTTON_PIN, GPIO.OUT)
 GPIO.output(GREEN_LED_PIN, GPIO.LOW)
 GPIO.output(RED_LED_PIN, GPIO.LOW)
 
-myNano.driveRobot(address1, 0, 0, 0, 90)
+# Forwards and Backwards
+while True:
+        start = GPIO.input(BUTTON_PIN)
+        if start == True:
+                break;
+        
+myNano.driveRobot(address1, 1, 0, 12, 0)
+myNano.driveRobot(address1, -1, 0, 12, 0)
+GPIO.output(RED_LED_PIN, GPIO.HIGH)
 time.sleep(10000)
 
 while True:
@@ -55,9 +66,15 @@ while True:
         #if not, run through jsonread
         
         if not os.path.isfile("/home/pi/locations/mars1.json"):
-                copyjson.copyjson()
-                GPIO.output(GREEN_LED_PIN, GPIO.HIGH)
-                sys.exit(0)
+                copy = False
+                while (not copy):
+                        copy = copyjson.copyjson()
+                        print('copied')
+                        GPIO.output(GREEN_LED_PIN, GPIO.HIGH)
+                        time.sleep(3)
+                        print('green led')
+                        sys.exit(0)
+                        print('you shouldnt be seeing this')
         
         # button pressed = round code starting
         while True:
@@ -67,30 +84,52 @@ while True:
         
         # Get JSON file location
         data = jsonread.jsonread()
+        
+        if (data == 0):
+                myNano.driveRobot(address1, 1, 0, 12, 0)
+                myNano.driveRobot(address1, -1, 0, 12, 0)
+                GPIO.output(RED_LED_PIN, GPIO.HIGH)
+                time.sleep(10000)
+        
+        # If for some reason json is empty just go forwards and backwards
+        #if len(data) <= 0:
+                #myNano.driveRobot(address1, 1, 0, 12, 0)
+                #myNano.driveRobot(address1, -1, 0, 12, 0)
+                #GPIO.output(RED_LED_PIN, GPIO.HIGH)
+                #time.sleep(10000)
         size = data["size"]
         # no way block is at 4,4 (starting location of robot)
         # no way closest block is 5 feet away
         minDist = 5 # feet
         minX = 4
         minY = 4
+        
+        fuck = False
+        while (size > 0):
+                if (data["y coords"][size - 1] > 4):
+                        fuck = True
+                size = size - 1
 
+        size = data["size"]
         # interates through all coordinates and finds minimum distance and at what coordinates
         while (size > 0):
                 print(size)
                 print("\n")
                 dist = abs(math.sqrt(math.pow((data["x coords"][size - 1] - 4), 2)+math.pow((data["y coords"][size - 1] - 4), 2)))
-				
-				if (data["x coords"][size - 1] == 4 and data["y coords"][size - 1] <= 4):
-					myNano.driveRobot(address1, 1, 0, 12)
-					myNano.driveRobot(address1, -1, 0, 12)
-					GPIO.output(RED_LED_PIN, GPIO.HIGH)
-					time.sleep(100000)
-				
-				if (data["y coords"][size - 1] > 1)
-					if (dist < minDist):
-							minX = data["x coords"][size - 1]
-							minY = data["y coords"][size - 1]
-							minDist = dist
+
+                #if all cubes are behind bot and there's one cube on the same x coordinate as robot, then just do forwards and backwards
+                if (data["x coords"][size - 1] == 4 and data["y coords"][size - 1] <= 4 and not fuck):
+                        myNano.driveRobot(address1, 1, 0, 12, 0)
+                        myNano.driveRobot(address1, -1, 0, 12, 0)
+                        GPIO.output(RED_LED_PIN, GPIO.HIGH)
+                        os.remove("/home/pi/locations/mars1.json")
+                        time.sleep(100000)
+                  
+                if (not (data["y coords"][size - 1] <= 1) and not (data["x coords"][size - 1] == 4 and data["y coords"][size - 1] <= 4)):
+                        if (dist < minDist):
+                                minX = data["x coords"][size - 1]
+                                minY = data["y coords"][size - 1]
+                                minDist = dist
                 size = size - 1
         
         print("MinX:", minX)
@@ -118,7 +157,7 @@ while True:
         #        dist = 12*(minX - 4 - 1)
         #        myNano.driveRobot(1, 0, dist, 0)
         
-		if (minY > 4):
+        if (minY > 4):
                 dist = 12*abs(minX - 4)
                 if (minX < 4):
                         #strafe left
@@ -131,28 +170,27 @@ while True:
                 myNano.driveRobot(address1, 1, 0, 12, 0)
         elif (minY <= 4):
                 #drive back
-                myNano.driveRobot(address1, -1, 0, 12*(4 - minY + 1))
-				#myNano.driveRobot(address1, 0, 0, 0, 90)
+                myNano.driveRobot(address1, -1, 0, 12*(4 - minY + 1), 0)
+                                #myNano.driveRobot(address1, 0, 0, 0, 90)
                 #myNano.driveRobot(address1, 0, 0, 0, 90)
                 dist = 12*abs(minX - 4)
                 print(dist);
                 if (minX < 4):
-                        #strafe right (reverse because we turned 180)
-                        myNano.driveRobot(address1, 0, 1, dist, 0)
-                elif (minX > 4):
-                        #strafe left
+                        #strafe left 
                         myNano.driveRobot(address1, 0, -1, dist, 0)
-				else:
-						
+                elif (minX > 4):
+                        #strafe right
+                        myNano.driveRobot(address1, 0, 1, dist, 0)
+                                                
                 #dist = 12*(minY - 4 - 1)
                 #myNano.driveRobot(address1, 1, 0, dist, 0)
                 
         # optimal angle for looking for cube
-        myNano.moveArm(address2, 3, 140)
-                
+        myNano.moveArm(address2, 3, VIEWING_ANGLE)
         # Align to the cube
         while True:
                 camera.capture("center.jpg")
+                
                 
                 center = myvision.getCenter("center.jpg");
                 
@@ -166,23 +204,26 @@ while True:
                         movedLeft += 1
                 elif (center == -2):
                         print("Block not found")
-                        myNano.driveRobot(address1, -1, 0, 1, 0)
+                        print(back_counter)
+                        if back_counter >1:
+                                found_cube = False
+                                break
+                        myNano.driveRobot(address1, -1, 0, 3, 0)
                         movedBack += 1
+                        back_counter = back_counter + 1
                 # Cube is centered. Move forward to pick cube up.
                 else:
-                        distance = myvision.getDist2Cube("center.jpg")
+                        #distance = myvision.getDist2Cube("center.jpg")
                         myNano.moveArm(address2, 3, 60)
-                        print("distance to cube: " + str(distance))
-                        myNano.driveRobot(address1, 1, 0, distance, 0)
+                        #print("distance to cube: " + str(distance))
+                        myNano.driveRobot(address1, 1, 0, 12, 0)
                         
                         # Move arm and pick it up
                         break;
                         
         # pick up block
         myNano.moveArm(address2, 2, 0)
-        myNano.moveArm(address2, 3, 160)
-        
-        myNano.moveArm(address2, 2, 180)
+        myNano.moveArm(address2, 3, VIEWING_ANGLE)
 
         while(movedRight != 0):
                 myNano.driveRobot(address1, 0, -1, 2, 0)
@@ -191,10 +232,11 @@ while True:
                 myNano.driveRobot(address1, 0, 1, 2, 0)
                 movedLeft -= 1
         while(movedBack != 0):
-                myNano.driveRobot(address1, 1, 0, 1, 0)
+                myNano.driveRobot(address1, 1, 0, 3, 0)
                 movedBack -= 1
-        
-        myNano.driveRobot(address1, -1, 0, distance)
+
+        if found_cube:
+                myNano.driveRobot(address1, -1, 0, 12, 0)
         #myNano.driveRobot(address1, 0, 0, 0, 90)
         #myNano.driveRobot(address1, 0, 0, 0, 90)
 
@@ -215,19 +257,21 @@ while True:
                 myNano.driveRobot(address1, -1, 0, 12, 0)
         elif (minY <= 4):
                 dist = 12*abs(minX - 4)
-                print(dist);
                 if (minX < 4):
                         #strafe right
                         myNano.driveRobot(address1, 0, 1, dist, 0)
                 elif (minX > 4):
                         #strafe left
                         myNano.driveRobot(address1, 0, -1, dist, 0)
-                dist = 12*(minY - 4 + 1)
+                dist = 12*(abs(minY - 4) + 1)
+                print(dist)
                 myNano.driveRobot(address1, 1, 0, dist, 0)
+                myNano.moveArm(address2, 2, 180)
+                myNano.moveArm(address2, 3, 70)
 
 
         #end of code, delete json file
-        os.remove("/home/pi/locations/mars1.json")
+        #os.remove("/home/pi/locations/mars1.json")
 
         GPIO.output(RED_LED_PIN, GPIO.HIGH)
         time.sleep(10000)

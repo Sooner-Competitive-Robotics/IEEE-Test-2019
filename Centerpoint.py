@@ -16,7 +16,9 @@ def center(imagename):
 	thresh = cv2.threshold(blurred, 180, 255, cv2.THRESH_BINARY)[1]
 	cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 	cnts = imutils.grab_contours(cnts)
-	
+	#cv2.imshow("thresh", thresh)
+	#cv2.imshow("cnts", cnts)
+	#cv2.waitKey(0)
 	cX = 0
 	cY = 0
 	
@@ -40,7 +42,7 @@ def center(imagename):
 	#####################################################
 	#    Use this value to change radius tolerance      #
 	#####################################################
-	CENTER_RANGE = 100
+	CENTER_RANGE = 80
 	
 	if diff == 300 or diff == -300:
 		return -2
@@ -53,4 +55,4 @@ def center(imagename):
 		return 0
 
 
-center("center.jpg")
+#center("center.jpg")
